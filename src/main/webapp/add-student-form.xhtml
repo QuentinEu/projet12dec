@@ -2,52 +2,72 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 	<title>Add Student</title>
-	
-	<h:outputStylesheet library="css" name="style.css"  />
-	<h:outputStylesheet library="css" name="add-student-style.css"  />
-	
+
+	<h:outputStylesheet library="css" name="style.css" />
+	<h:outputStylesheet library="css" name="add-student-style.css" />
+
 </h:head>
 
 <h:body>
-
-	<div id="wrapper">
-		<div id="header">
-			<h2>FooBar University</h2>
+	<f:view>
+		<div id="wrapper">
+			<div id="header">
+				<h2>FooBar University</h2>
+			</div>
 		</div>
-	</div>
-	
-	<div id="container">
-		<h3>Add Student</h3>
 
-		<h:messages globalOnly="true" />
+		<div id="container">
+			<h3>Add Student</h3>
 
-		<h:form id="form" style="margin-top: 10px;" >
-			<h:panelGrid columns="3">
-			
-				<h:outputLabel>First name:</h:outputLabel> <h:inputText value="#{student.firstName}" id="firstName" /> <h:message for="firstName" />
-	
-				<h:outputLabel>Last name:</h:outputLabel> <h:inputText value="#{student.lastName}" id="lastName" /> <h:message for="lastName" />
-	
-				<h:outputLabel>Email:</h:outputLabel> <h:inputText value="#{student.email}" id="email" 
-									required="true"
-            							requiredMessage="Your email is mandatory."/> 	<h:message for="email" />
-				
-				<h:outputLabel /> <h:commandButton value="Save" styleClass="save" action="#{studentController.addStudent(student)}"/>
-			
-			</h:panelGrid>
-		</h:form>
+			<h:messages globalOnly="true" />
 
-		<div style="clear: both;"></div>
+			<h:form id="form" style="margin-top: 10px;">
+				<h:panelGrid columns="3">
 
-		<p><h:outputLink value="list-students.xhtml">Back to List</h:outputLink></p>
+					<p:outputLabel>First name:</p:outputLabel>
+					<p:inputText value="#{student.firstName}" id="firstName"
+						required="true" validatorMessage="Invalid, minimum 3 letters">
+						<f:validateRegex pattern="[A-Za-z]{3,}" />
+					</p:inputText>
+					<p:message for="firstName" />
+					<p:outputLabel>Last name:</p:outputLabel>
+					<p:inputText value="#{student.lastName}" id="lastName"
+						required="true" validatorMessage="Invalid, minimum 3 letters">
+						<f:validateRegex pattern="[A-Za-z]{3,}" />
+					</p:inputText>
+					<p:message for="lastName" />
 
-	</div>	
+					<p:outputLabel>Email:</p:outputLabel>
+					<p:inputText value="#{student.email}" id="email" required="true"
+						requiredMessage="Your email is mandatory."
+						validatorMessage="Invalid email format, minimum : x@x.xx">
+						<f:validateRegex
+							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+					</p:inputText>
+					<p:message for="email" />
+
+					<h:outputLabel />
+					<p:commandButton value="Save" styleClass="save"
+						action="#{studentController.addStudent(student)}" />
+
+				</h:panelGrid>
+			</h:form>
+
+			<div style="clear: both;"></div>
+
+			<p>
+				<h:outputLink value="list-students.xhtml">Back to List</h:outputLink>
+			</p>
+
+		</div>
+	</f:view>
 </h:body>
 </html>
